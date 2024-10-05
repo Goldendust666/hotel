@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Formulario de Edición de Encuesta</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>Formulario de Edición de Encuesta</h1>
+
+<form th:action="@{/encuestas/actualizar/{id}(id=${encuesta.id})}" method="post" th:object="${encuesta}">
+    <input type="hidden" name="id" th:value="${encuesta.id}">
+
+    <div>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" th:value="${encuesta.nombre}">
+        <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
+    </div>
+
+    <div>
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" id="apellidos" name="apellidos" th:value="${encuesta.apellidos}">
+        <span th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}"></span>
+    </div>
+
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" th:value="${encuesta.email}">
+        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+    </div>
+
+    <div>
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" name="edad" th:value="${encuesta.edad}">
+        <span th:if="${#fields.hasErrors('edad')}" th:errors="*{edad}"></span>
+    </div>
+
+    <div>
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" id="telefono" name="telefono" th:value="${encuesta.telefono}">
+        <span th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></span>
+    </div>
+
+    <div>
+        <label for="fechaInicioEstancia">Fecha de inicio estancia:</label>
+        <input type="date" id="fechaInicioEstancia" name="fechaInicioEstancia" th:value="${encuesta.fechaInicioEstancia}">
+        <span th:if="${#fields.hasErrors('fechaInicioEstancia')}" th:errors="*{fechaInicioEstancia}"></span>
+    </div>
+
+    <div>
+        <label for="motivoVisita">Motivo de visita:</label>
+        <select id="motivoVisita" name="motivoVisita">
+            <option value="">Seleccione un motivo</option>
+            <option th:value="trabajo" th:selected="*{motivoVisita == 'trabajo'}">Trabajo</option>
+            <option th:value="estudios" th:selected="*{motivoVisita == 'estudios'}">Estudios</option>
+            <option th:value="turismo" th:selected="*{motivoVisita == 'turismo'}">Turismo</option>
+            <option th:value="otros" th:selected="*{motivoVisita == 'otros'}">Otros</option>
+        </select>
+        <span th:if="${#fields.hasErrors('motivoVisita')}" th:errors="*{motivoVisita}"></span>
+    </div>
+
+    <div>
+        <label>Servicios utilizados:</label>
+        <input type="checkbox" id="serviciosUtilizados1" name="serviciosUtilizados" th:value="restaurante" th:checked="${encuesta.serviciosUtilizados.contains('restaurante')}">
+        <label for="serviciosUtilizados1">Restaurante</label>
+        <input type="checkbox" id="serviciosUtilizados2" name="serviciosUtilizados" th:value="gimnasio" th:checked="${encuesta.serviciosUtilizados.contains('gimnasio')}">
+        <label for="serviciosUtilizados2">Gimnasio</label>
+        <input type="checkbox" id="serviciosUtilizados3" name="serviciosUtilizados" th:value="spa" th:checked="${encuesta.serviciosUtilizados.contains('spa')}">
+        <label for="serviciosUtilizados3">Spa</label>
+        <input type="checkbox" id="serviciosUtilizados4" name="serviciosUtilizados" th:value="piscina" th:checked="${encuesta.serviciosUtilizados.contains('piscina')}">
+        <label for="serviciosUtilizados4">Piscina</label>
+        <input type="checkbox" id="serviciosUtilizados5" name="serviciosUtilizados" th:value="room_service" th:checked="${encuesta.serviciosUtilizados.contains('room_service')}">
+        <label for="serviciosUtilizados5">Room service</label>
+        <span th:if="${#fields.hasErrors('serviciosUtilizados')}" th:errors="*{serviciosUtilizados}"></span>
+    </div>
+    <div>
+        <label>Nivel de satisfacción:</label>
+        <input type="radio" id="nivelMuySatisfecho" name="nivelSatisfaccion" th:value="muy_satisfecho" th:checked="${encuesta.nivelSatisfaccion == 'muy_satisfecho'}">
+        <label for="nivelMuySatisfecho">Muy satisfecho</label>
+        <input type="radio" id="nivelSatisfecho" name="nivelSatisfaccion" th:value="satisfecho" th:checked="${encuesta.nivelSatisfaccion == 'satisfecho'}">
+        <label for="nivelSatisfecho">Satisfecho</label>
+        <input type="radio" id="nivelNeutral" name="nivelSatisfaccion" th:value="neutral" th:checked="${encuesta.nivelSatisfaccion == 'neutral'}">
+        <label for="nivelNeutral">Neutral</label>
+        <input type="radio" id="nivelInsatisfecho" name="nivelSatisfaccion" th:value="insatisfecho" th:checked="${encuesta.nivelSatisfaccion == 'insatisfecho'}">
+        <label for="nivelInsatisfecho">Insatisfecho</label>
+        <input type="radio" id="nivelMuyInsatisfecho" name="nivelSatisfaccion" th:value="muy_insatisfecho" th:checked="${encuesta.nivelSatisfaccion == 'muy_insatisfecho'}">
+        <label for="nivelMuyInsatisfecho">Muy insatisfecho</label>
+        <span th:if="${#fields.hasErrors('nivelSatisfaccion')}" th:errors="*{nivelSatisfaccion}"></span>
+    </div>
+    <div>
+        <label for="otrosComentarios">Otros comentarios:</label>
+        <textarea id="otrosComentarios" name="otrosComentarios" th:value="${encuesta.otrosComentarios}"></textarea>
+    </div>
+
+    <button type="submit">Actualizar encuesta</button>
+</form>
+</body>
+</html>

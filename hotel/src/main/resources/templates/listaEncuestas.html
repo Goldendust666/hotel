@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Listado de Encuestas</title>
+    <style>
+        /* Estilos CSS */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        .btn {
+            margin-right: 5px;
+        }
+        .encuesta-item {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .botones {
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+<h1>Listado de Encuestas</h1>
+<form th:action="@{/encuestas/filtrar}" method="get">
+    <select name="nivelSatisfaccion" th:value="${nivelSatisfaccion ?: ''}">
+        <option th:value="muy_satisfecho" th:selected="*{nivelSatisfaccion == 'muy_satisfecho'}">Muy Satisfecho</option>
+        <option th:value="satisfecho" th:selected="*{nivelSatisfaccion == 'satisfecho'}">Satisfecho</option>
+        <option th:value="neutral" th:selected="*{nivelSatisfaccion == 'neutral'}">Neutral</option>
+        <option th:value="insatisfecho" th:selected="*{nivelSatisfaccion == 'insatisfecho'}">Insatisfecho</option>
+        <option th:value="muy_insatisfecho" th:selected="*{nivelSatisfaccion == 'muy_insatisfecho'}">Muy Insatisfecho</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Filtrar</button>
+</form>
+
+<div th:each="encuesta : ${encuestas}">
+    <div class="encuesta-item">
+        <h3>Huésped: <span th:text="${encuesta.nombre}"></span></h3>
+        <p>Fecha de inicio: <span th:text="${encuesta.fechaInicioEstancia}"></span></p>
+        <p>Nivel de satisfacción: <span th:text="${encuesta.nivelSatisfaccion}"></span></p>
+
+        <div class="botones">
+            <form th:action="@{/encuestas/{id}(id=${encuesta.id})}" method="get" style="display: inline-block;">
+                <button type="submit" class="btn btn-info">Ver</button>
+            </form>
+
+            <form th:action="@{/encuestas/eliminar/{id}(id=${encuesta.id})}" method="get">
+                <input type="hidden" name="id" th:value="${encuesta.id}">
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+            </form>
+
+            <form th:action="@{/encuestas/editar/{id}(id=${encuesta.id})}" method="get">
+                <input type="hidden" name="id" th:value="${encuesta.id}">
+                <button type="submit" class="btn btn-warning">Editar</button>
+            </form>
+        </div>
+    </div>
+    <hr>
+</div>
+
+<div th:if="${encuestas!= null &&!encuestas.isEmpty()}">
+    <h2>Estadísticas:</h2>
+    <p>Total de encuestas: <span th:text="${encuestas.size()}"></span></p>
+    <p>Promedio de edad: <span th:text="${promedioAge}"></span> años</p>
+    <ul>
+        <li><strong>Muy satisfecho:</strong> <span th:text="${porcentajeMS}"></span>%</li>
+        <li><strong>Satisfecho:</strong> <span th:text="${porcentajeS}"></span>%</li>
+        <li><strong>Neutral:</strong> <span th:text="${porcentajeN}"></span>%</li>
+        <li><strong>Insatisfecho:</strong> <span th:text="${porcentajeI}"></span>%</li>
+        <li><strong>Muy insatisfecho:</strong> <span th:text="${porcentajeMI}"></span>%</li>
+    </ul>
+</div>
+
+<form th:action="@{/encuestas/crear}" method="get">
+    <button type="submit" class="btn btn-success">Crear nueva encuesta</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Formulario de Encuesta</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>Formulario de Encuesta</h1>
+
+<form th:action="@{/encuestas}" method="post" th:object="${encuesta}">
+    <div>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" th:field="*{nombre}" required>
+        <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
+    </div>
+
+    <div>
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" id="apellidos" th:field="*{apellidos}" required>
+        <span th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}"></span>
+    </div>
+
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}" required>
+        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+    </div>
+
+    <div>
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" th:field="*{edad}" required>
+        <span th:if="${#fields.hasErrors('edad')}" th:errors="*{edad}"></span>
+    </div>
+
+    <div>
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" id="telefono" th:field="*{telefono}" required>
+        <span th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></span>
+    </div>
+
+    <div>
+        <label for="fechaInicioEstancia">Fecha de inicio estancia:</label>
+        <input type="date" id="fechaInicioEstancia" th:field="*{fechaInicioEstancia}" required>
+        <span th:if="${#fields.hasErrors('fechaInicioEstancia')}" th:errors="*{fechaInicioEstancia}"></span>
+    </div>
+
+    <div>
+        <label for="motivoVisita">Motivo de visita:</label>
+        <select id="motivoVisita" th:field="*{motivoVisita}" required>
+            <option value="">Seleccione un motivo</option>
+            <option th:value="trabajo" th:selected="*{motivoVisita == 'trabajo'}">Trabajo</option>
+            <option th:value="estudios" th:selected="*{motivoVisita == 'estudios'}">Estudios</option>
+            <option th:value="turismo" th:selected="*{motivoVisita == 'turismo'}">Turismo</option>
+            <option th:value="otros" th:selected="*{motivoVisita == 'otros'}">Otros</option>
+        </select>
+        <span th:if="${#fields.hasErrors('motivoVisita')}" th:errors="*{motivoVisita}"></span>
+    </div>
+
+    <div>
+        <label>Servicios utilizados:</label>
+        <input type="checkbox" id="serviciosUtilizados1" th:field="*{serviciosUtilizados}" th:value="restaurante">
+        <label for="serviciosUtilizados1">Restaurante</label>
+        <input type="checkbox" id="serviciosUtilizados2" th:field="*{serviciosUtilizados}" th:value="gimnasio">
+        <label for="serviciosUtilizados2">Gimnasio</label>
+        <input type="checkbox" id="serviciosUtilizados3" th:field="*{serviciosUtilizados}" th:value="spa">
+        <label for="serviciosUtilizados3">Spa</label>
+        <input type="checkbox" id="serviciosUtilizados4" th:field="*{serviciosUtilizados}" th:value="piscina">
+        <label for="serviciosUtilizados4">Piscina</label>
+        <input type="checkbox" id="serviciosUtilizados5" th:field="*{serviciosUtilizados}" th:value="room_service">
+        <label for="serviciosUtilizados5">Room service</label>
+        <span th:if="${#fields.hasErrors('serviciosUtilizados')}" th:errors="*{serviciosUtilizados}"></span>
+    </div>
+    <div>
+        <label>Nivel de satisfacción:</label>
+        <input type="radio" id="nivelMuySatisfecho" name="nivelSatisfaccion" th:field="*{nivelSatisfaccion}" th:value="muy_satisfecho">
+        <label for="nivelMuySatisfecho">Muy satisfecho</label>
+        <input type="radio" id="nivelSatisfecho" name="nivelSatisfaccion" th:field="*{nivelSatisfaccion}" th:value="satisfecho">
+        <label for="nivelSatisfecho">Satisfecho</label>
+        <input type="radio" id="nivelNeutral" name="nivelSatisfaccion" th:field="*{nivelSatisfaccion}" th:value="neutral">
+        <label for="nivelNeutral">Neutral</label>
+        <input type="radio" id="nivelInsatisfecho" name="nivelSatisfaccion" th:field="*{nivelSatisfaccion}" th:value="insatisfecho">
+        <label for="nivelInsatisfecho">Insatisfecho</label>
+        <input type="radio" id="nivelMuyInsatisfecho" name="nivelSatisfaccion" th:field="*{nivelSatisfaccion}" th:value="muy_insatisfecho">
+        <label for="nivelMuyInsatisfecho">Muy insatisfecho</label>
+        <span th:if="${#fields.hasErrors('nivelSatisfaccion')}" th:errors="*{nivelSatisfaccion}"></span>
+    </div>
+    <div>
+        <label for="otrosComentarios">Otros comentarios:</label>
+        <textarea id="otrosComentarios" th:field="*{otrosComentarios}" rows="4" cols="50"></textarea>
+    </div>
+
+    <button type="submit">Enviar encuesta</button>
+</form>
+</body>
+</html>
