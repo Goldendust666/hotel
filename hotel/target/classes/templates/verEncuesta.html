@@ -86,8 +86,8 @@
     </div>
 </div>
 
-<div>
-    <button onclick=>Volver al Listado de Encuestas</button>
-</div>
+<form th:action="@{/encuestas/}" method="post" >
+    <button type="submit">Volver al Listado de Encuestas</button>
+</form>
 </body>
 </html>
